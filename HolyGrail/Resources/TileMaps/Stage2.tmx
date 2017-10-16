@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="15" height="10" tilewidth="32" tileheight="32" nextobjectid="25">
+ <tileset firstgid="1" source="holyGrail-Bush.tsx"/>
+ <tileset firstgid="57" source="meta.tsx"/>
+ <tileset firstgid="66" source="indexMeta.tsx"/>
+ <layer name="Background" width="15" height="10">
+  <data encoding="base64" compression="zlib">
+   eJzTYWBI0CECM2AByOK41OEyh5B6YuxCVktIDJc52PyFLIdPPSE/4XIzLjtx+ZdY+wnpxRY26HKEwoTYtAEA2KskGQ==
+  </data>
+ </layer>
+ <objectgroup name="Objects">
+  <object id="1" name="HeroPoint" x="208" y="48"/>
+  <object id="2" name="DemonPoint1" x="112" y="80"/>
+  <object id="3" name="DemonPoint2" x="208" y="144"/>
+  <object id="4" name="DemonPoint3" x="304" y="112"/>
+  <object id="5" name="WolfPoint1" x="80" y="48"/>
+  <object id="6" name="WolfPoint2" x="144" y="112"/>
+  <object id="7" name="WolfPoint3" x="144" y="208"/>
+  <object id="8" name="WolfPoint4" x="176" y="240"/>
+  <object id="9" name="JellyPoint1" x="336" y="80"/>
+  <object id="10" name="JellyPoint2" x="240" y="144"/>
+  <object id="11" name="JellyPoint3" x="208" y="208"/>
+  <object id="12" name="JellyPoint4" x="304" y="208"/>
+  <object id="13" name="JellyPoint5" x="272" y="240"/>
+  <object id="14" name="MacePoint1" x="48" y="48"/>
+  <object id="15" name="MacePoint2" x="272" y="80"/>
+  <object id="16" name="MacePoint3" x="304" y="144"/>
+  <object id="17" name="MacePoint4" x="176" y="208"/>
+  <object id="18" name="SwordPoint1" x="80" y="80"/>
+  <object id="19" name="SwordPoint2" x="272" y="208"/>
+  <object id="20" name="SwordPoint3" x="272" y="272"/>
+  <object id="21" name="KeyPoint" x="368" y="144"/>
+  <object id="22" name="BoxPoint" x="48" y="144"/>
+  <object id="23" name="HolySwordPoint1" x="176" y="144"/>
+  <object id="24" name="HolySwordPoint2" x="368" y="80"/>
+ </objectgroup>
+ <layer name="IndexInfo" width="15" height="10" opacity="0.73">
+  <data encoding="base64" compression="zlib">
+   eJxjYKAMOEExtfU7I8k7Y5HHphYZuJDoBmckc0jRSy4A2eGKZJczlE8sQFbrRqE7aAEAFhUFiA==
+  </data>
+ </layer>
+ <layer name="MetaInfo" width="15" height="10" opacity="0.73">
+  <data encoding="base64" compression="zlib">
+   eJyNUQEKACEI27fKu/L+/6kzMJBYVjBwS51WAVAuwM7QxdCSvF2fyatBiS7Ou+HZ1E40omni+4UY3l/dC+497l5Sy3bLOJsZPrMEzxpi5rVqceee5O384/vf/PXa45T/A+avFDY=
+  </data>
+ </layer>
+</map>

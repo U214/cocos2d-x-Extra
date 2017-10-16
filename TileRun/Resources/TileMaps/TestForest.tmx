@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="24" height="10" tilewidth="32" tileheight="32" nextobjectid="4">
+ <tileset firstgid="1" source="TestForest.tsx"/>
+ <tileset firstgid="199" source="Meta.tsx"/>
+ <tileset firstgid="201" source="../../../../../../Users/U214/Desktop/TileMap/Meta.tsx"/>
+ <layer name="Background" width="24" height="10">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFQx0wYsGjgDjASgWMzyw1IFalEMMANjkA83wDow==
+  </data>
+ </layer>
+ <objectgroup name="Objects">
+  <object id="2" name="SpawnPoint" x="16" y="226"/>
+ </objectgroup>
+ <layer name="MetaInfo" width="24" height="10">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFtAYnseBRQBzAFnakYnxmDXUAAKLXFTQ=
+  </data>
+ </layer>
+</map>

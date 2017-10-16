@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="15" height="10" tilewidth="32" tileheight="32" nextobjectid="32">
+ <tileset firstgid="1" source="holyGrail-Cactus.tsx"/>
+ <tileset firstgid="57" source="meta.tsx"/>
+ <tileset firstgid="66" source="indexMeta.tsx"/>
+ <layer name="Background" width="15" height="10">
+  <data encoding="base64" compression="zlib">
+   eJxjYEAFKmiYFKCCg01tvejy+PSSwkdn41KLThOSI2Q2Nj46ICY88anBFZ/ExjOp6QIAQwIFfQ==
+  </data>
+ </layer>
+ <objectgroup name="Objects">
+  <object id="1" name="HeroPoint" x="176" y="48"/>
+  <object id="3" name="SwordPoint1" x="176" y="80"/>
+  <object id="4" name="SwordPoint2" x="176" y="144"/>
+  <object id="5" name="SwordPoint3" x="208" y="112"/>
+  <object id="6" name="SwordPoint4" x="176" y="240"/>
+  <object id="7" name="SwordPoint5" x="176" y="272"/>
+  <object id="8" name="SwordPoint6" x="240" y="272"/>
+  <object id="9" name="HolySwordPoint1" x="208" y="48"/>
+  <object id="10" name="HolySwordPoint2" x="208" y="80"/>
+  <object id="11" name="HolySwordPoint3" x="144" y="272"/>
+  <object id="12" name="HolySwordPoint4" x="208" y="272"/>
+  <object id="13" name="MacePoint1" x="208" y="176"/>
+  <object id="14" name="MacePoint2" x="144" y="240"/>
+  <object id="15" name="MacePoint3" x="240" y="304"/>
+  <object id="16" name="KeyPoint" x="336" y="176"/>
+  <object id="17" name="BoxPoint" x="48" y="176"/>
+  <object id="18" name="WolfPoint1" x="176" y="112"/>
+  <object id="19" name="WolfPoint2" x="208" y="144"/>
+  <object id="20" name="WolfPoint3" x="176" y="176"/>
+  <object id="21" name="WolfPoint4" x="80" y="240"/>
+  <object id="22" name="WolfPoint5" x="208" y="240"/>
+  <object id="23" name="WolfPoint6" x="240" y="240"/>
+  <object id="24" name="WolfPoint7" x="304" y="240"/>
+  <object id="25" name="JellyPoint1" x="48" y="208"/>
+  <object id="26" name="JellyPoint2" x="112" y="240"/>
+  <object id="27" name="JellyPoint3" x="208" y="208"/>
+  <object id="28" name="JellyPoint4" x="272" y="240"/>
+  <object id="29" name="DemonPoint1" x="80" y="208"/>
+  <object id="30" name="DemonPoint2" x="176" y="208"/>
+  <object id="31" name="DemonPoint3" x="336" y="208"/>
+ </objectgroup>
+ <layer name="IndexInfo" width="15" height="10" opacity="0.86">
+  <data encoding="base64" compression="zlib">
+   eJxjYKA+cKJAnzMFel3I1OtMgb0uDMT71wlNrTMDppvx+cGVAeFWENsNiN2hbA8i3eAC1ecK1UsuIBTWAHGaBy0=
+  </data>
+ </layer>
+ <layer name="MetaInfo" width="15" height="10" opacity="0.76">
+  <data encoding="base64" compression="zlib">
+   eJxjYEAFlmiYFABTb0OmXisi9aLLg/h2UP3Y5AjxraD6LdHEsal1RBKH2WuNJmaLQ689EDsgme0AFUO2ywGLXmS77KH2wdwME0N3Pzb9IGzDgAhnKwbi4xk9XVgTUA8APZgPmQ==
+  </data>
+ </layer>
+</map>
