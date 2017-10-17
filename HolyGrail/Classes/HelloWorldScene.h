@@ -13,25 +13,32 @@ public:
 	static cocos2d::Scene* createScene();
 	virtual bool init();
 	CREATE_FUNC(HelloWorld);
-
+	
+	// 맵 초기화
 	void initMap(Ref* pSender);
+	// 맵 생성, 객체들 위치 값 받기
 	void createMap();
+	// 객체 생성
 	void createObject();
+	// 객체 애니메이션
 	void createAnimation();
 
 	cocos2d::Vec2 tileCoordForPosition(cocos2d::Vec2 position);
+
+	// 메타 레이어에 의해 캐릭터 위치 값 설정(아이템, 몬스터 관련)
 	void setPlayerPosition(cocos2d::Vec2 position);
 
 	void onEnter();
 	bool onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event);
+	// 캐릭터 이동
 	void onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event);
 
 	cocos2d::Texture2D*						texture;
 	cocos2d::EventListenerTouchOneByOne*	listener;
 	cocos2d::Size							winSize;
-	cocos2d::LabelTTF*						stage;
-	cocos2d::Layer*							stageLayer;
-	std::vector<cocos2d::Color4B>			stageColor;
+	cocos2d::LabelTTF*						stage;		// 화면에 나오는 스테이지 단계
+	cocos2d::Layer*							stageLayer;	// 스테이지 레이어
+	std::vector<cocos2d::Color4B>			stageColor;	// 스테이지 배경색
 
 	cocos2d::Vec2							heroPosition;
 	cocos2d::Vec2							boxPosition;
@@ -66,11 +73,16 @@ public:
 	cocos2d::TMXLayer*						metainfo;
 	cocos2d::TMXLayer*						indexinfo;
 
+	// 먹고 먹히는 관계 (K:아이템 V:객체)
 	std::map<std::string, std::string>		objectMap;
+	// 아이템에 해당되는 Sprite Frame 이름 (K:아이템 V:Sprite Frame이름)
 	std::map<std::string, std::string>		itemFrameMap;
+	// 객체마다 지정된 태그 값 (K:객체 V:태그번호)
 	std::map<std::string, int>				objectTagMap;
 
+	// 현재 가지고 있는 아이템
 	std::string haveItem;
+	// 현재 스테이지 번호
 	int stageNum = 1;
 };
 

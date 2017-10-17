@@ -22,6 +22,7 @@ bool HelloWorld::init()
 	sideUI->setOpacity(150);
 	defaultLayer->addChild(sideUI);
 
+	// 아이템 박스 이미지
 	auto sideB1 = Sprite::create("Images/SideB1.png");
 	sideB1->setPosition(Vec2(
 		453, this->getContentSize().height - 32));
@@ -39,6 +40,7 @@ bool HelloWorld::init()
 		sideB1->getPosition().x, this->getContentSize().height - 32));
 	defaultLayer->addChild(itemBox);
 
+	// 리셋 버튼
 	auto sideB2Item = MenuItemImage::create(
 		"Images/SideB2.png",
 		"Images/SideB2.png",
@@ -51,6 +53,7 @@ bool HelloWorld::init()
 	sideB2Menu->setPosition(Vec2::ZERO);
 	defaultLayer->addChild(sideB2Menu);
 
+	// 현재 스테이지 표기
 	stage = LabelTTF::create("", "Thonburi", 14);
 	stage->setPosition(Vec2(sideB1->getPosition().x, sideB2Item->getPosition().y + 40));
 	stage->setColor(Color3B::WHITE);
@@ -89,6 +92,9 @@ bool HelloWorld::init()
     return true;
 }
 
+/*
+	맵 생성, 객체들 위치 값 받기
+*/
 void HelloWorld::createMap() {
 	stageLayer = LayerColor::create(stageColor.at(stageNum - 1));
 	this->addChild(stageLayer, 0, 1);
@@ -205,6 +211,9 @@ void HelloWorld::createMap() {
 	this->createObject();
 }
 
+/*
+	객체 생성(캐릭터, 몬스터, 아이템)
+*/
 void HelloWorld::createObject() {
 	hero = Sprite::createWithSpriteFrameName("Hero02.png");
 	hero->setPosition(heroPosition);
@@ -269,6 +278,9 @@ void HelloWorld::createObject() {
 	}
 }
 
+/*
+	객체들 애니메이션 생성(한번만 실행)
+*/
 void HelloWorld::createAnimation() {
 	SpriteFrameCache::getInstance()->addSpriteFramesWithFile("Images/Holygrail.plist");
 
@@ -363,6 +375,9 @@ bool HelloWorld::onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event) {
 	return true;
 }
 
+/*
+	마우스의 움직임에 의해 캐릭터 이동
+*/
 void HelloWorld::onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event) {
 	auto touchPoint = touch->getLocation();
 	touchPoint = this->convertToNodeSpace(touchPoint);
@@ -408,6 +423,9 @@ Vec2 HelloWorld::tileCoordForPosition(Vec2 position) {
 	return Vec2(x, y);
 }
 
+/*
+	메타 레이어에 의해 캐릭터 위치 값 설정(아이템, 몬스터 관련)
+*/
 void HelloWorld::setPlayerPosition(Vec2 position) {
 	Vec2 tileCoord = this->tileCoordForPosition(position);
 	int metaTileGid = metainfo->getTileGIDAt(tileCoord);
@@ -472,6 +490,9 @@ void HelloWorld::setPlayerPosition(Vec2 position) {
 	hero->setPosition(position);
 }
 
+/*
+	맵 초기화해주는 함수
+*/
 void HelloWorld::initMap(Ref* pSender) {
 	if (stageNum == 4) {
 		return;
