@@ -6,6 +6,7 @@
 #endif
 
 #include "cocos2d.h"
+#include <array>
 
 #define WIDTH_NUM 8
 #define HEIGHT_NUM 10
@@ -23,13 +24,38 @@ public:
 
 	void setupBoard();
 	void update(float t);
+	void clock(float t);
+	void doRemoveFromParent(Ref* pSender);
+
+	bool createGem();
+	void testCreateGem();
+	void removeConnectedGems(int x, int y, int gemType);
+	void findConnectedGems(int x, int y, int gemType);
+	void endAction(int col, int j);
+	void displayHint();
+	void activatePowerUp(int x, int y, int hStart, int vStart);
+
+	void updateSparkle();
+	//void createGameOver();
 
 	bool isGameOver = false;
 	bool isDisplayingHint = false;
-	int score = 0;
+	bool isCreated = true;
+	bool isRemoved = false;
+	bool isChanging = false;
+	bool isFinding = false;
 
-	cocos2d::Vector<cocos2d::Sprite*> board;
-	cocos2d::Vector<cocos2d::Sprite*> gemsInColumn;
+	cocos2d::Sprite*			idxPup;
+	cocos2d::ProgressTimer*     timer;
+	cocos2d::BlendFunc			blend;
+
+	int score = 0;
+	int lastScore = 0;
+	float lastMoveTime = 0.f;
+	float timeLeft = 0.f;
+
+	std::array<cocos2d::Sprite*, 80> board;
+	cocos2d::Vector<cocos2d::Sprite*> connectedGems;
 
 };
 
