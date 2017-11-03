@@ -1,6 +1,4 @@
-ï»¿#include "HelloWorldScene.h"
-#include <cstdlib>
-#include <ctime>
+#include "HelloWorldScene.h"
 
 USING_NS_CC;
 
@@ -17,33 +15,14 @@ bool HelloWorld::init()
 	}
 
 	/////////////////////////////////
+
 	winSize = Director::getInstance()->getWinSize();
 
-	SpriteFrameCache::getInstance()->addSpriteFrame(
-		SpriteFrame::create("bird1.png", Rect(0, 0, 86, 60)), "bird1.png");
-	SpriteFrameCache::getInstance()->addSpriteFrame(
-		SpriteFrame::create("bird2.png", Rect(0, 0, 86, 60)), "bird2.png");
-	SpriteFrameCache::getInstance()->addSpriteFrame(
-		SpriteFrame::create("bird3.png", Rect(0, 0, 86, 60)), "bird3.png");
-	SpriteFrameCache::getInstance()->addSpriteFrame(
-		SpriteFrame::create("holdback1.png", Rect(0, 0, 148, 430)), "pipe1.png");
-	SpriteFrameCache::getInstance()->addSpriteFrame(
-		SpriteFrame::create("holdback2.png", Rect(0, 430, 148, 400)), "pipe2.png");
-
-	birdAnimation = Animation::create();
-	birdAnimation->setDelayPerUnit(0.1f);
-	birdAnimation->addSpriteFrame(
-		SpriteFrameCache::getInstance()->getSpriteFrameByName("bird2.png"));
-	birdAnimation->addSpriteFrame(
-		SpriteFrameCache::getInstance()->getSpriteFrameByName("bird3.png"));
-	birdAnimation->addSpriteFrame(
-		SpriteFrameCache::getInstance()->getSpriteFrameByName("bird1.png"));
-	birdAnimation->retain();
-	
+	// ¿ùµå »ý¼º
 	if (this->createBox2dWorld(true)) {
-	_world->SetContactListener((b2ContactListener *)this);
+		srand((int)time(NULL));
 
-		srand((int)time(nullptr));
+		_world->SetContactListener((b2ContactListener *)this);
 		this->setBox2dWorld();
 		this->schedule(schedule_selector(HelloWorld::tick));
 	}
@@ -52,24 +31,25 @@ bool HelloWorld::init()
 }
 
 bool HelloWorld::createBox2dWorld(bool debug) {
-	////////////////////////// ì›”ë“œ ìƒì„± ì‹œìž‘
-
-	//ì¤‘ë ¥ì˜ ë°©í–¥ ê²°ì •
+	/////////////// ¿ùµå »ý¼º ½ÃÀÛ
+	// Áß·ÂÀÇ ¹æÇâÀ» °áÁ¤ÇÑ´Ù.
 	b2Vec2 gravity = b2Vec2(0.0f, -30.0f);
 
-	// ì›”ë“œ ìƒì„±
+	// ¿ùµå¸¦ »ý¼ºÇÑ´Ù.
 	_world = new b2World(gravity);
 	_world->SetAllowSleeping(true);
 	_world->SetContinuousPhysics(true);
 
-	// ë””ë²„ê·¸ ë“œë¡œìž‰ ì„¤ì •
+	// µð¹ö±× µå·ÎÀ× ¼³Á¤
 	if (debug) {
+		// Àû»ö : ÇöÀç ¹°¸® ¿îµ¿ Áß
+		// È¸»ö :  ÇöÀç ¹°¸® ¿îµ¿·®ÀÌ ¾øÀ½
 		m_debugDraw = new GLESDebugDraw(PTM_RATIO);
 		_world->SetDebugDraw(m_debugDraw);
 
 		uint32 flags = 0;
 		flags += b2Draw::e_shapeBit;
-		flags += b2Draw::e_jointBit;
+		//flags += b2Draw::e_jointBit;
 		//flags += b2Draw::e_aabbBit;
 		//flags += b2Draw::e_pairBit;
 		//flags += b2Draw::e_centerOfMassBit;
@@ -78,71 +58,62 @@ bool HelloWorld::createBox2dWorld(bool debug) {
 
 	b2BodyDef groundBodyDef;
 	groundBodyDef.position.Set(0, 0);
-	b2Body *groundBody = _world->CreateBody(&groundBodyDef);
+	b2Body* groundBody = _world->CreateBody(&groundBodyDef);
 
 	b2EdgeShape groundEdge;
 	b2FixtureDef boxShapeDef;
 	boxShapeDef.shape = &groundEdge;
 
-	// ì•„ëž˜
-	groundEdge.Set(b2Vec2(0, 0), b2Vec2(winSize.width * 5 / PTM_RATIO, 0));
+	// 480 X 2 * 320
+
+	// ¾Æ·¡ÂÊ
+	groundEdge.Set(b2Vec2(0, 0), b2Vec2(winSize.width * 2 / PTM_RATIO, 0));
 	groundBody->CreateFixture(&boxShapeDef);
 
-	// ì™¼ìª½
+	// ¿ÞÂÊ
 	groundEdge.Set(b2Vec2(0, 0), b2Vec2(0, winSize.height / PTM_RATIO));
 	groundBody->CreateFixture(&boxShapeDef);
 
-	// ìœ„ìª½
-	groundEdge.Set(
-		b2Vec2(0, winSize.height / PTM_RATIO),
-		b2Vec2(winSize.width / PTM_RATIO, winSize.height / PTM_RATIO));
+	// À§ÂÊ
+	groundEdge.Set(b2Vec2(0, winSize.height / PTM_RATIO), b2Vec2(winSize.width * 2 / PTM_RATIO, winSize.height / PTM_RATIO));
 	groundBody->CreateFixture(&boxShapeDef);
 
-	//// ì˜¤ë¥¸ìª½
-	groundEdge.Set(
-		b2Vec2(winSize.width * 5 / PTM_RATIO, winSize.height / PTM_RATIO),
-		b2Vec2(winSize.width * 5/ PTM_RATIO, 0));
+	// ¿À¸¥ÂÊ
+	groundEdge.Set(b2Vec2(winSize.width * 2 / PTM_RATIO, winSize.height / PTM_RATIO), b2Vec2(winSize.width * 2 / PTM_RATIO, 0));
 	groundBody->CreateFixture(&boxShapeDef);
 
-	///////////////////////////// ì›”ë“œ ìƒì„± ë
-
+	//////////////////// ¿ùµå »ý¼º ³¡
 	return true;
 }
 
 void HelloWorld::setBox2dWorld() {
-	playerIsFlying = false;
+	auto bg1 = Sprite::create("Images/bg.png");
+	bg1->setAnchorPoint(Vec2(0, 0));
+	bg1->setContentSize(winSize);
+	this->addChild(bg1);
 
-	while (bgVector.size() < 2) {
-		bgVector.pushBack(Sprite::create("bg.png"));
-		bgVector.back()->setAnchorPoint(Vec2::ZERO);
-		this->addChild(bgVector.back());
-	}
+	auto bg2 = Sprite::create("Images/bg.png");
+	bg2->setPosition(Vec2(winSize.width, 0));
+	bg2->setAnchorPoint(Vec2(0, 0));
+	bg2->setContentSize(winSize);
+	this->addChild(bg2);
 
-	bgVector.back()->setPositionX(winSize.width);
+	isFlying = false;
 
-	bird = this->addNewSprite(Vec2(100, winSize.height/2), Size(86, 60), b2_dynamicBody, "bird1.png", 1);
-	Sprite* birdSprite = (Sprite*)bird->GetUserData();
+	birdSprite = Sprite::create("Images/bird2.png");
+	pipe1Sprite = Sprite::create("Images/holdback1.png");
+	pipe2Sprite = Sprite::create("Images/holdback2.png");
 
-	birdSprite->runAction(RepeatForever::create(Animate::create(birdAnimation)));
+	bird = addNewSprite(Vec2(50, 160), birdSprite, b2_dynamicBody, 0);
+	pipe1 = addNewSprite(Vec2(300, 0), pipe1Sprite, b2_staticBody, 1);
+	pipe2 = addNewSprite(Vec2(300, winSize.height), pipe2Sprite, b2_staticBody, 1);
 
-	this->runAction(Follow::create(birdSprite));
-
-	pipe1 = this->addNewSprite(Vec2(500, 200), Size(150, 430), b2_staticBody, "pipe1.png", 0);
-	pipe2 = this->addNewSprite(Vec2(500, 1200), Size(150, 430), b2_staticBody, "pipe2.png", 0);
-	
-	//for (int i = 0; i < 2; i++) {
-	//	int randx = rand() % (int)winSize.width;
-	//	int randy = rand() % (int)winSize.height;
-
-	//	log("randx : %d, randy : %d", randx, randy);
-	//	pipe1 = this->addNewSprite(Vec2(randx, randy), Size(150, 830), b2_staticBody, "pipe1.png", 0);
-	//	pipe2 = this->addNewSprite(Vec2(randx, randy + 100), Size(150, 830), b2_staticBody, "pipe2.png", 0);
-	//}
 }
 
 HelloWorld::~HelloWorld() {
+	// ¿ùµå¸¦ new·Î »ý¼ºÇßÀ¸¹Ç·Î ¼Ò¸êÀÚ¿¡¼­ Áö¿öÁÜ
 	delete _world;
-	_world = NULL;
+	_world = nullptr;
 }
 
 void HelloWorld::onEnter() {
@@ -150,28 +121,23 @@ void HelloWorld::onEnter() {
 
 	auto listener = EventListenerTouchOneByOne::create();
 	listener->setSwallowTouches(true);
-
 	listener->onTouchBegan = CC_CALLBACK_2(HelloWorld::onTouchBegan, this);
 	listener->onTouchEnded = CC_CALLBACK_2(HelloWorld::onTouchEnded, this);
 
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 }
 
-void HelloWorld::onExit() {
-	_eventDispatcher->removeEventListener(listener);
-	Scene::onExit();
-}
-
 void HelloWorld::tick(float dt) {
 	int velocityIterations = 8;
 	int positionIterations = 3;
 
-	// Step : ë¬¼ë¦¬ ì„¸ê³„ë¥¼ ì‹œë®¬ë ˆì´ì…˜ í•œë‹¤
+	// Step : ¹°¸® ¼¼°è¸¦ ½Ã¹Ä·¹ÀÌ¼ÇÇÑ´Ù.
 	_world->Step(dt, velocityIterations, positionIterations);
 
-	for (b2Body *b = _world->GetBodyList(); b; b = b->GetNext()) {
-		if (b->GetUserData() != NULL) {
-			Sprite* spriteData = (Sprite*)b->GetUserData();
+	// ¸¸µé¾îÁø °´Ã¼¸¸Å­ ·çÇÁ¸¦ µ¹¸®¸é¼­ ¹Ùµð¿¡ ºÙÀº ½ºÇÁ¶óÀÌÆ®¸¦ Á¦¾îÇÑ´Ù.
+	for (b2Body* b = _world->GetBodyList(); b; b = b->GetNext()) {
+		if (b->GetUserData() != nullptr) {
+			Sprite* spriteData = (Sprite *)b->GetUserData();
 			spriteData->setPosition(Vec2(
 				b->GetPosition().x * PTM_RATIO,
 				b->GetPosition().y * PTM_RATIO));
@@ -179,84 +145,103 @@ void HelloWorld::tick(float dt) {
 		}
 	}
 
-	if (playerIsFlying) {
-		bird->ApplyLinearImpulse(
-			b2Vec2(0.1, playerVelocity),
+	if (isFlying) {
+		bird->ApplyLinearImpulse(b2Vec2(0.03f, birdVelocity),
 			bird->GetWorldCenter(),
 			true);
-		playerVelocity += 0.1f;
 
-		if (playerVelocity > 1.5f)
-			playerVelocity = 1.5f;
+		birdVelocity += 0.01f;
 
-	}
-
-	log("bird pos : %f, PTM_RATIO.width : %f", bird->GetPosition().x, winSize.width/ PTM_RATIO);
-	if (((int)bird->GetPosition().x % (int)(winSize.width / PTM_RATIO)) == 0) {
-		int preIdx = (bgIdx == 0) ? 1 : 0;
-		bgVector.at(bgIdx)->setPosition(Vec2(bird->GetPosition().x * PTM_RATIO, 0));
-
-		if ((int)bird->GetPosition().x == (int) winSize.width / PTM_RATIO * 5) {
-			log("ëŒì•„ê°");
-			bird->SetTransform(b2Vec2(50 / PTM_RATIO, 1280 / 2 / PTM_RATIO), 0.f);
+		if (birdVelocity > 1.5f) {
+			birdVelocity = 1.5f;
 		}
 	}
+
+	// »õ°¡ È­¸éÀÇ ÃÖ´ë ³Êºñ¿¡ ´Ù´Ù¸£¸é »õ¸¦ ¿øÁ¡¿¡ ³õ±â(ÆÄÀÌÇÁµµ Àç¼³Á¤)
+	if (bird->GetPosition().x >= winSize.width * 2 / PTM_RATIO - 1) {
+		bird->SetTransform(b2Vec2(0, bird->GetPosition().y), 0);
+
+		pipe1->SetTransform(b2Vec2(
+			(10 - (rand() % 3)), rand() % 2), 0);
+		pipe2->SetTransform(b2Vec2(
+			pipe1->GetPosition().x, winSize.height / PTM_RATIO - rand() % 2), 0);
+	}
+
+	// »õ°¡ ÆÄÀÌÇÁ¸¦ Áö³ª¸é ÆÄÀÌÇÁ À§Ä¡ Àç¼³Á¤
+	if (bird->GetPosition().x > pipe1->GetPosition().x + 8) {
+		pipe1->SetTransform(b2Vec2(
+			(pipe1->GetPosition().x + 17 - (rand() % 3)), rand() % 2), 0);
+		
+		pipe2->SetTransform(b2Vec2(
+			pipe1->GetPosition().x, winSize.height / PTM_RATIO - rand() % 2), 0);
+	}
 }
 
-void HelloWorld::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
-{
-	Scene::draw(renderer, transform, flags);
+bool HelloWorld::onTouchBegan(Touch* touch, Event* event) {
+	if (!isGameOver) {
+		birdVelocity = 0.5f;
+		isFlying = true;
 
-	_customCommand.init(_globalZOrder, transform, flags);
-	_customCommand.func = CC_CALLBACK_0(HelloWorld::onDraw, this, transform, flags);
-	renderer->addCommand(&_customCommand);
+		return true;
+	}
+	else {
+		return false;
+	}
 }
 
-b2Body* HelloWorld::addNewSprite(Vec2 point, Size size, b2BodyType bodytype,
-	const char* spriteName, int type) {
+void HelloWorld::onTouchEnded(Touch* touch, Event* event) {
+	isFlying = false;
+	birdVelocity = 0.0f;
+}
+
+b2Body* HelloWorld::addNewSprite(Vec2 location, Sprite* sprite, b2BodyType bodyType, int type) {
 	b2BodyDef bodyDef;
-	bodyDef.type = bodytype;
-	bodyDef.position.Set(point.x / PTM_RATIO, point.y / PTM_RATIO);
+	bodyDef.type = bodyType;
+	bodyDef.position.Set(location.x / PTM_RATIO, location.y / PTM_RATIO);
 
-	Sprite* sprite = Sprite::createWithSpriteFrameName(spriteName);
-	sprite->setPosition(point);
+	sprite->setScale(0.5f);
+	sprite->setPosition(location);
 	this->addChild(sprite);
+
+	// ÆÄÀÌÇÁ(³Ê¹« ±æ¾î¼­ »çÀÌÁî Á¶Á¤)
+	if (type == 1) {
+		sprite->setContentSize(Size(
+			sprite->getContentSize().width,
+			sprite->getContentSize().height / 2));
+	}
+
 	bodyDef.userData = sprite;
 
 	b2Body* body = _world->CreateBody(&bodyDef);
 
 	b2FixtureDef fixtureDef;
-	b2CircleShape circle;
 	b2PolygonShape dynamicBox;
 
-	if (type == 0) {
-		dynamicBox.SetAsBox(size.width / 2 / PTM_RATIO, size.height / 2 / PTM_RATIO);
-		fixtureDef.shape = &dynamicBox;
-	}
-	else {
-		circle.m_radius = 0.6f;
-		fixtureDef.shape = &circle;
-	}
+	dynamicBox.SetAsBox(
+		sprite->getContentSize().width / 4 / PTM_RATIO,
+		sprite->getContentSize().height / 4 / PTM_RATIO);
+	fixtureDef.shape = &dynamicBox;
 
-	fixtureDef.density = 1.0f;
-	fixtureDef.friction = 0.3f;
-	fixtureDef.restitution = 0.f;
+	if (type == 0) { // »õ
+		//this->runAction(Follow::create(sprite));
+
+		fixtureDef.density = 0.5f;
+		fixtureDef.friction = 0.5f;
+		fixtureDef.restitution = 0.f;
+	}
 
 	body->CreateFixture(&fixtureDef);
 
 	return body;
 }
 
-bool HelloWorld::onTouchBegan(Touch* touch, Event* event) {
-	playerVelocity = 0.5f;
-	playerIsFlying = true;
+void HelloWorld::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
+{
+	Scene::draw(renderer, transform, flags);
 
-	return true;
-}
-
-void HelloWorld::onTouchEnded(Touch* touch, Event* event) {
-	playerIsFlying = false;
-	playerVelocity = 0.f;
+	_customCmd.init(_globalZOrder, transform, flags);
+	_customCmd.func = CC_CALLBACK_0(HelloWorld::onDraw, this, transform, flags);
+	renderer->addCommand(&_customCmd);
 }
 
 void HelloWorld::onDraw(const Mat4 &transform, uint32_t flags)
@@ -274,12 +259,24 @@ void HelloWorld::onDraw(const Mat4 &transform, uint32_t flags)
 }
 
 void HelloWorld::BeginContact(b2Contact* contact) {
-	num = 0;
-	log("Contact : Begin");
 }
 
-void HelloWorld::PreSolve(b2Contact* contact, const b2Manifold* oldManifold) {
-	log("Contact : PreSolve");
-	log("ë„Œ ì£½ì–´ìžˆë‹¤");
-	// setEnable ì—¬ê¸°ì„œ
+void HelloWorld::PreSolve(b2Contact* contact, const b2Manifold* oldManifold)
+{
+	b2Fixture* fixA = contact->GetFixtureA();
+	b2Fixture* fixB = contact->GetFixtureB();
+
+	b2Body* bodyA = fixA->GetBody();
+	b2Body* bodyB = fixB->GetBody();
+
+	if (((bodyA->GetUserData() == birdSprite) && (bodyB->GetUserData() == pipe1Sprite))
+		|| ((bodyA->GetUserData() == birdSprite) && (bodyB->GetUserData() == pipe2Sprite))) {
+		isGameOver = true;
+		
+		Sprite* pipeSprite = (Sprite *)bodyB->GetUserData();
+
+		auto gameover = Sprite::create("Images/gameover.png");
+		gameover->setPosition(Vec2(pipeSprite->getPosition().x, winSize.height / 2));
+		this->addChild(gameover);
+	}
 }

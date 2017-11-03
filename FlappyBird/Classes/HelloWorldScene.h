@@ -13,7 +13,7 @@
 
 using namespace cocos2d;
 
-class HelloWorld
+class HelloWorld 
 	: public cocos2d::Scene
 	, public b2ContactListener
 {
@@ -22,49 +22,41 @@ public:
 	virtual bool init();
 	CREATE_FUNC(HelloWorld);
 
-	EventListenerTouchOneByOne* listener;
-
 	Size winSize;
 	Texture2D* texture;
 	b2World* _world;
+
+	// For debugging
 	GLESDebugDraw* m_debugDraw;
-
-	bool bDrag;
-	b2Body *dragBody;
-	b2MouseJoint *mouseJoint;
-	b2Body *gbody;
-	Animation* birdAnimation;
-
-	int num;
-
-	bool createBox2dWorld(bool debug);
-	void setBox2dWorld();
+	CustomCommand _customCmd;
 
 	~HelloWorld();
-	virtual void draw(Renderer* renderer, const Mat4& transform, uint32_t flags) override;
+	bool createBox2dWorld(bool debug);
+	void setBox2dWorld();
+	virtual void draw(cocos2d::Renderer* renderer, const cocos2d::Mat4& transform,
+		uint32_t flags) override;
+	void onDraw(const cocos2d::Mat4& transform, uint32_t flags);
 
 	void onEnter();
-	void onExit();
-	b2Body* addNewSprite(Vec2 point, Size size, b2BodyType bodytype,
-		const char* spriteName, int type);
+	void tick(float dt);
+	
+	b2Body*		pipe1;
+	b2Body*		pipe2;
+	b2Body*		bird;
+
+	Sprite*		pipe1Sprite;
+	Sprite*		pipe2Sprite;
+	Sprite*		birdSprite;
+	float		birdVelocity;
+	bool		isFlying;
+	bool		isGameOver = false;
+
 	bool onTouchBegan(Touch* touch, Event* event);
 	void onTouchEnded(Touch* touch, Event* event);
-	void tick(float dt);
+	b2Body* addNewSprite(Vec2 location, Sprite* sprite, b2BodyType bodyType, int type);
+
 	void BeginContact(b2Contact* contact);
 	void PreSolve(b2Contact* contact, const b2Manifold* oldManifold);
-
-	b2Body* bird;
-	b2Body* pipe1;
-	b2Body* pipe2;
-	Vector<Sprite*> bgVector;
-	float playerVelocity;
-	bool playerIsFlying;
-
-	int bgIdx = 0;
-
-protected:
-	void onDraw(const Mat4& transform, uint32_t flags);
-	CustomCommand _customCommand;
 };
 
 #endif // __HELLOWORLD_SCENE_H__

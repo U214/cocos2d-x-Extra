@@ -18,10 +18,10 @@ using namespace CocosDenshion;
 
 USING_NS_CC;
 
-static cocos2d::Size designResolutionSize = cocos2d::Size(640, 960);
-static cocos2d::Size smallResolutionSize = cocos2d::Size(640, 960);
-static cocos2d::Size mediumResolutionSize = cocos2d::Size(640, 960);
-static cocos2d::Size largeResolutionSize = cocos2d::Size(640, 960);
+static cocos2d::Size designResolutionSize = cocos2d::Size(520, 760);
+static cocos2d::Size smallResolutionSize = cocos2d::Size(520, 760);
+static cocos2d::Size mediumResolutionSize = cocos2d::Size(520, 760);
+static cocos2d::Size largeResolutionSize = cocos2d::Size(520, 760);
 
 AppDelegate::AppDelegate()
 {
